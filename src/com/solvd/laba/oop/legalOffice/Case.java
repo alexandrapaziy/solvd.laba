@@ -2,29 +2,31 @@ package com.solvd.laba.oop.legalOffice;
 
 import java.util.Objects;
 
-public class Case {
-    private int caseNumber;
+public final class Case implements Printable, Reviewable {
+    private static int initialCaseNumber = 1000;
+    private static int caseNumberCounter = 0;
+    private final int caseNumber;
     private Client client;
     private Lawyer lawyer;
     private String caseDescription;
     private CaseStatus caseStatus;
     private int caseComplexity;
 
-    public Case(int caseNumber, Client client, Lawyer lawyer, String caseDescription, int caseComplexity) {
-        this.caseNumber = caseNumber;
+    static {
+        caseNumberCounter = initialCaseNumber;
+    }
+
+    public Case(Client client, Lawyer lawyer, String caseDescription, int caseComplexity) {
         this.client = client;
         this.lawyer = lawyer;
         this.caseDescription = caseDescription;
         this.caseComplexity = caseComplexity;
-        openCase();
+        this.caseNumber = caseNumberCounter++;
+        openReview();
     }
 
     public int getCaseNumber() {
         return caseNumber;
-    }
-
-    public void setCaseNumber(int caseNumber) {
-        this.caseNumber = caseNumber;
     }
 
     public Client getClient() {
@@ -67,19 +69,22 @@ public class Case {
         this.caseComplexity = caseComplexity;
     }
 
-    public void openCase() {
+    @Override
+    public void openReview() {
         this.setCaseStatus(CaseStatus.IN_REVIEW);
         System.out.println("Case number " + caseNumber + " is opened. Status: " + getCaseStatus());
         System.out.println("----------------------------");
     }
 
-    public void closeCase() {
+    @Override
+    public void closeReview() {
         this.setCaseStatus(CaseStatus.CLOSED);
         System.out.println("Case number " + caseNumber + " is closed.");
         System.out.println("----------------------------");
     }
 
-    public void displayInfo() {
+    @Override
+    public void printDetails() {
         System.out.println("Case Information:");
         System.out.println("Case Number: " + caseNumber);
         System.out.println("Case Description: " + caseDescription);

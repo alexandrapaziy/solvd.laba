@@ -2,7 +2,7 @@ package com.solvd.laba.oop.legalOffice;
 
 import java.util.Date;
 
-public class Document {
+public class Document implements Signable, Printable, Reviewable {
     private DocumentType documentType;
     private String documentContent;
     private Date creationDate;
@@ -11,7 +11,7 @@ public class Document {
     public Document(DocumentType documentType, String documentContent) {
         this.documentType = documentType;
         this.documentContent = documentContent;
-        createDocument();
+        openReview();
     }
 
     public DocumentType getDocumentType() {
@@ -46,16 +46,18 @@ public class Document {
         this.documentStatus = documentStatus;
     }
 
-    public void createDocument() {
+    @Override
+    public void openReview() {
         this.setDocumentStatus(DocumentStatus.DEVELOPMENT);
         this.setCreationDate(new Date());
-        System.out.println("Document created. Status: " + getDocumentStatus());
+        System.out.println("Document created and open for review. Status: " + getDocumentStatus());
         System.out.println("----------------------------");
     }
 
-    public void signDocument(Client client) {
+    @Override
+    public void sign(Client client) {
         this.setDocumentStatus(DocumentStatus.SIGNED);
-        System.out.println("Document signed by " + client.firstName + " " + client.lastName+ ". Status: " + getDocumentStatus());
+        System.out.println("Document signed by " + client.firstName + " " + client.lastName + ". Status: " + getDocumentStatus());
         System.out.println("----------------------------");
     }
 
@@ -65,6 +67,14 @@ public class Document {
         System.out.println("----------------------------");
     }
 
+    @Override
+    public void closeReview() {
+        this.setDocumentStatus(DocumentStatus.CLOSED);
+        System.out.println("Document close for review. Status: " + getDocumentStatus());
+        System.out.println("----------------------------");
+    }
+
+    @Override
     public void printDetails() {
         System.out.println("Document Details:");
         System.out.println("Document type: " + documentType);

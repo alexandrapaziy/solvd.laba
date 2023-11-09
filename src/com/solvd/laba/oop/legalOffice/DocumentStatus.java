@@ -4,4 +4,5 @@ public enum DocumentStatus {
     DEVELOPMENT,
     SIGNED,
     SUBMITTED,
+    CLOSED,
 }

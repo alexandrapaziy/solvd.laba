@@ -2,24 +2,25 @@ package com.solvd.laba.oop.legalOffice;
 
 import java.util.Date;
 
-public class Invoice {
-    private int invoiceNumber;
+public final class Invoice implements Signable, Payable {
+    private static int initialInvoiceNumber = 1000;
+    private static int invoiceNumberCounter = 0;
+    private final int invoiceNumber;
     private Date dueDate;
-
     private Case legalCase;
 
-    public Invoice(int invoiceNumber, Case legalCase) {
-        this.invoiceNumber = invoiceNumber;
+    static {
+        invoiceNumberCounter = initialInvoiceNumber;
+    }
+
+    public Invoice(Case legalCase) {
+        this.invoiceNumber = invoiceNumberCounter++;
         this.dueDate = new Date();
         this.legalCase = legalCase;
     }
 
     public int getInvoiceNumber() {
         return invoiceNumber;
-    }
-
-    public void setInvoiceNumber(int invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
     }
 
     public Date getDueDate() {
@@ -38,8 +39,9 @@ public class Invoice {
         this.legalCase = legalCase;
     }
 
-    public double calculateServicePrice() {
-        double basePrice = 100;
+    @Override
+    public final double makePayment() {
+        double basePrice = 1000;
         double experienceFactor = 1 + (legalCase.getLawyer().getExperienceYears() / 10.0);
         double complexityFactor = 1 + (legalCase.getCaseComplexity() / 10.0);
 
@@ -52,7 +54,14 @@ public class Invoice {
         System.out.println("Invoice Date: " + dueDate);
         System.out.println("Case number: " + legalCase.getCaseNumber());
         System.out.println("Client payer: " + legalCase.getClient().firstName + " " + legalCase.getClient().lastName);
-        System.out.println("Amount: " + calculateServicePrice() + " $");
+        System.out.println("Amount: " + makePayment() + " $");
         System.out.println("----------------------------");
     }
+
+    @Override
+    public void sign(Client client) {
+        System.out.println("Invoice signed by " + client.firstName + " " + client.lastName + ".");
+        System.out.println("----------------------------");
+    }
+
 }

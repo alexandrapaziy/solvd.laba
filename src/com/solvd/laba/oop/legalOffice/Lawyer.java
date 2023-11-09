@@ -2,23 +2,19 @@ package com.solvd.laba.oop.legalOffice;
 
 import java.util.Objects;
 
-public class Lawyer extends Employee {
-    private String license;
+public class Lawyer extends Employee implements Payable {
+    private final String license;
     private LawyerSpecializationType specialization;
 
-    public Lawyer(String firstName, String lastName, String age, String position, double salary, int experienceYears,
+    public Lawyer(String firstName, String lastName, int age, String position, int experienceYears,
                   ContactInfo contactInfo, String license, LawyerSpecializationType specialization) {
-        super(firstName, lastName, age, position, salary, experienceYears, contactInfo);
+        super(firstName, lastName, age, position, experienceYears, contactInfo);
         this.license = license;
         this.specialization = specialization;
     }
 
     public String getLicense() {
         return license;
-    }
-
-    public void setLicense(String license) {
-        this.license = license;
     }
 
     public LawyerSpecializationType getSpecialization() {
@@ -50,5 +46,20 @@ public class Lawyer extends Employee {
     @Override
     public int hashCode() {
         return Objects.hash(license, specialization);
+    }
+
+    @Override
+    public final double makePayment() {
+        double baseSalary = 5000.0;
+        double experienceFactor = 1 + (getExperienceYears() / 10.0);
+
+        return baseSalary * experienceFactor;
+    }
+
+    public final void takeSalary() {
+        System.out.println("Salary Information:");
+        System.out.println("Lawyer: " + getFirstName() + " " + getLastName());
+        System.out.println("Amount: " + makePayment() + " $");
+        System.out.println("----------------------------");
     }
 }

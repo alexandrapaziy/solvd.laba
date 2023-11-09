@@ -3,9 +3,9 @@ package com.solvd.laba.oop.legalOffice;
 public abstract class Person {
     protected String firstName;
     protected String lastName;
-    private String age;
+    private int age;
 
-    public Person(String firstName, String lastName, String age) {
+    public Person(String firstName, String lastName, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -27,13 +27,11 @@ public abstract class Person {
         this.lastName = lastName;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
-
-    public abstract void displayInfo();
 }

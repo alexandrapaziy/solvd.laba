@@ -1,6 +1,6 @@
 package com.solvd.laba.oop.legalOffice;
 
-public class Court extends LegalEntity {
+public class Court extends LegalEntity implements Printable {
     private CourtType courtType;
 
     public Court(String entityName, String address, CourtType courtType) {

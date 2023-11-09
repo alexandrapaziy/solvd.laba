@@ -2,7 +2,7 @@ package com.solvd.laba.oop.legalOffice;
 
 import java.util.List;
 
-public class LegalOffice extends LegalEntity {
+public class LegalOffice extends LegalEntity implements Printable {
     private List<Employee> employees;
 
     public LegalOffice(String entityName, String address, List<Employee> employees) {
@@ -25,7 +25,7 @@ public class LegalOffice extends LegalEntity {
         System.out.println("Address: " + getAddress());
         System.out.println("Employees: ");
         for (Employee employee : employees) {
-            employee.displayInfo();
+            employee.printDetails();
         }
         System.out.println("----------------------------");
     }
