@@ -1,5 +1,8 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.interfaces.Payable;
+import com.solvd.laba.oop.legalOffice.interfaces.Signable;
+
 import java.util.Date;
 
 public final class Invoice implements Signable, Payable {

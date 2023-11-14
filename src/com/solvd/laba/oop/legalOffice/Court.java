@@ -1,5 +1,10 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.enums.CaseStatus;
+import com.solvd.laba.oop.legalOffice.enums.CourtType;
+import com.solvd.laba.oop.legalOffice.enums.DocumentStatus;
+import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+
 public class Court extends LegalEntity implements Printable {
     private CourtType courtType;
 

@@ -1,5 +1,8 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.interfaces.Contactable;
+import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+
 public class Employee extends Person implements Printable, Contactable {
     private static int employeeCount = 0;
     protected String position;

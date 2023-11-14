@@ -1,5 +1,8 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.interfaces.Contactable;
+import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+
 import java.util.Objects;
 
 public class Client extends Person implements Printable, Contactable {

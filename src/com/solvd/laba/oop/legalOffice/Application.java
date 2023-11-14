@@ -1,5 +1,9 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.enums.CourtType;
+import com.solvd.laba.oop.legalOffice.enums.DocumentType;
+import com.solvd.laba.oop.legalOffice.enums.LawyerSpecializationType;
+
 import java.util.ArrayList;
 import java.util.List;
 

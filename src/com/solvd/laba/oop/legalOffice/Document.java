@@ -1,5 +1,11 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.enums.DocumentStatus;
+import com.solvd.laba.oop.legalOffice.enums.DocumentType;
+import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+import com.solvd.laba.oop.legalOffice.interfaces.Reviewable;
+import com.solvd.laba.oop.legalOffice.interfaces.Signable;
+
 import java.util.Date;
 
 public class Document implements Signable, Printable, Reviewable {

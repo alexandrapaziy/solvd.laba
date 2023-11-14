@@ -1,5 +1,9 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.enums.CaseStatus;
+import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+import com.solvd.laba.oop.legalOffice.interfaces.Reviewable;
+
 import java.util.Objects;
 
 public final class Case implements Printable, Reviewable {

@@ -1,4 +1,4 @@
-package com.solvd.laba.oop.legalOffice;
+package com.solvd.laba.oop.legalOffice.enums;
 
 public enum CaseStatus {
     IN_REVIEW,

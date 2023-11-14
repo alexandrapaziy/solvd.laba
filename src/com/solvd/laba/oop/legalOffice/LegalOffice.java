@@ -1,5 +1,7 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+
 import java.util.List;
 
 public class LegalOffice extends LegalEntity implements Printable {

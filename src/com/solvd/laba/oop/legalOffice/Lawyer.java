@@ -1,5 +1,8 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.enums.LawyerSpecializationType;
+import com.solvd.laba.oop.legalOffice.interfaces.Payable;
+
 import java.util.Objects;
 
 public class Lawyer extends Employee implements Payable {
