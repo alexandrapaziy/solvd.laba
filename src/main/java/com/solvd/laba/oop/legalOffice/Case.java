@@ -1,12 +1,17 @@
 package com.solvd.laba.oop.legalOffice;
 
 import com.solvd.laba.oop.legalOffice.enums.CaseStatus;
+import com.solvd.laba.oop.legalOffice.exceptions.InvalidCaseException;
+import com.solvd.laba.oop.legalOffice.exceptions.InvalidDocumentException;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
 import com.solvd.laba.oop.legalOffice.interfaces.Reviewable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 import java.util.Objects;
 
 public final class Case implements Printable, Reviewable {
+    private static final Logger logger = (Logger) LogManager.getLogger(Application.class);
     private static int initialCaseNumber = 1000;
     private static int caseNumberCounter = 0;
     private final int caseNumber;
@@ -73,11 +78,29 @@ public final class Case implements Printable, Reviewable {
         this.caseComplexity = caseComplexity;
     }
 
+    private void validateCase() throws InvalidCaseException {
+        if (client == null || lawyer == null || caseDescription == null || caseDescription.trim().isEmpty()) {
+            throw new InvalidCaseException("Client, lawyer, or case description is null or empty.");
+        }
+
+        if (caseComplexity < 1 || caseComplexity > 10) {
+            throw new InvalidCaseException("Case complexity should be greater than 0, and lower than 11.");
+        }
+    }
+
+
     @Override
     public void openReview() {
-        this.setCaseStatus(CaseStatus.IN_REVIEW);
-        System.out.println("Case number " + caseNumber + " is opened. Status: " + getCaseStatus());
-        System.out.println("----------------------------");
+        try {
+            validateCase();
+
+            this.setCaseStatus(CaseStatus.IN_REVIEW);
+            System.out.println("Case number " + caseNumber + " is opened. Status: " + getCaseStatus());
+            System.out.println("----------------------------");
+        } catch (InvalidCaseException e) {
+            System.out.println();
+            logger.error("Invalid case: " + e.getMessage() + "\n");
+        }
     }
 
     @Override
