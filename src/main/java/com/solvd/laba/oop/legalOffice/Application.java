@@ -10,7 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.solvd.laba.oop.legalOffice.Client.getClientCount;
 import static com.solvd.laba.oop.legalOffice.Employee.getEmployeeCount;
@@ -20,7 +22,6 @@ public class Application {
 
     public static void main(String[] args) throws PaymentFailedException, InvalidInvoiceException, InvalidContactInfoException {
         Court court = new Court("Central Civil Court", "city Kyiv", CourtType.CIVIL_COURT);
-        court.printDetails();
 
         ContactInfo employeeContact = new ContactInfo("987654321", "mariajonson@example.com");
         Employee employeeMaria = new Employee("Maria", "Jonson", 24, "administrator", 3, employeeContact);
@@ -41,7 +42,10 @@ public class Application {
         lawyerMike.getContacts();
 
         ContactInfo clientContact = new ContactInfo(null, null);
-        Client clientAlice = new Client("Alice", "Smith", 25, "Legal advice in civil law field", clientContact);
+        Set<ContactInfo> clientContacts = new HashSet<>();
+        clientContacts.add(clientContact);
+
+        Client clientAlice = new Client("Alice", "Smith", 25, "Legal advice in civil law field", clientContacts);
         clientContact.setPhone("987654321");
         clientContact.setEmail("alicesmith@example.com");
         clientAlice.printDetails();
@@ -51,6 +55,12 @@ public class Application {
         caseAlice.setClient(clientAlice);
         caseAlice.printDetails();
 
+        caseAlice.addToProcessingQueue("Gather evidence");
+        caseAlice.addToProcessingQueue("Interview witnesses");
+        caseAlice.addToProcessingQueue("Prepare legal documents");
+
+        caseAlice.processQueue();
+
         getClientCount();
 
         Document document = new Document(null, "Claim for recognition of property ownership in the order of inheritance");
@@ -59,6 +69,9 @@ public class Application {
         document.setDocumentType(DocumentType.STATEMENT);
         document.sign(clientAlice);
         document.submitToCourt(court);
+
+        court.addCaseToCourt(caseAlice);
+        court.printDetails();
 
         court.issueCourtDecision(caseAlice, document, "Ownership is recognized");
         document.closeReview();
@@ -73,8 +86,6 @@ public class Application {
         invoice.processPayment(300);
         invoice.processPayment(3000);
 
-
         lawyerMike.takeSalary();
-
     }
 }

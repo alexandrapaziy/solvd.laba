@@ -3,11 +3,15 @@ package com.solvd.laba.oop.legalOffice;
 import com.solvd.laba.oop.legalOffice.enums.LawyerSpecializationType;
 import com.solvd.laba.oop.legalOffice.interfaces.Payable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Lawyer extends Employee implements Payable {
     private final String license;
     private LawyerSpecializationType specialization;
+
+    List<Employee> employees = new ArrayList<>();
 
     public Lawyer(String firstName, String lastName, int age, String position, int experienceYears,
                   ContactInfo contactInfo, String license, LawyerSpecializationType specialization) {
