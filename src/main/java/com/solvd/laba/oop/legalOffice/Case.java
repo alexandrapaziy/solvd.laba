@@ -1,12 +1,18 @@
 package com.solvd.laba.oop.legalOffice;
 
 import com.solvd.laba.oop.legalOffice.enums.CaseStatus;
+import com.solvd.laba.oop.legalOffice.exceptions.InvalidCaseException;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
 import com.solvd.laba.oop.legalOffice.interfaces.Reviewable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 
 public final class Case implements Printable, Reviewable {
+    private static final Logger logger = (Logger) LogManager.getLogger(Application.class);
     private static int initialCaseNumber = 1000;
     private static int caseNumberCounter = 0;
     private final int caseNumber;
@@ -15,6 +21,7 @@ public final class Case implements Printable, Reviewable {
     private String caseDescription;
     private CaseStatus caseStatus;
     private int caseComplexity;
+    private Queue<String> caseProcessingQueue;
 
     static {
         caseNumberCounter = initialCaseNumber;
@@ -27,6 +34,7 @@ public final class Case implements Printable, Reviewable {
         this.caseComplexity = caseComplexity;
         this.caseNumber = caseNumberCounter++;
         openReview();
+        this.caseProcessingQueue = new LinkedList<>();
     }
 
     public int getCaseNumber() {
@@ -73,11 +81,51 @@ public final class Case implements Printable, Reviewable {
         this.caseComplexity = caseComplexity;
     }
 
+    public Queue<String> getCaseProcessingQueue() {
+        return caseProcessingQueue;
+    }
+
+    public void setCaseProcessingQueue(Queue<String> caseProcessingQueue) {
+        this.caseProcessingQueue = caseProcessingQueue;
+    }
+
+    public void addToProcessingQueue(String task) {
+        caseProcessingQueue.offer(task);
+        System.out.println("Task added to the processing queue for Case " + caseNumber + ": " + task);
+    }
+
+    public void processQueue() {
+        System.out.println("Processing tasks in the queue for Case " + caseNumber + ":");
+        while (!caseProcessingQueue.isEmpty()) {
+            String task = caseProcessingQueue.poll();
+            System.out.println("Processing task: " + task);
+        }
+        System.out.println("All tasks processed for Case " + caseNumber);
+        System.out.println("----------------------------");
+    }
+
+    private void validateCase() throws InvalidCaseException {
+        if (client == null || lawyer == null || caseDescription == null || caseDescription.trim().isEmpty()) {
+            throw new InvalidCaseException("Client, lawyer, or case description is null or empty.");
+        }
+
+        if (caseComplexity < 1 || caseComplexity > 10) {
+            throw new InvalidCaseException("Case complexity should be greater than 0, and lower than 11.");
+        }
+    }
+
     @Override
     public void openReview() {
-        this.setCaseStatus(CaseStatus.IN_REVIEW);
-        System.out.println("Case number " + caseNumber + " is opened. Status: " + getCaseStatus());
-        System.out.println("----------------------------");
+        try {
+            validateCase();
+
+            this.setCaseStatus(CaseStatus.IN_REVIEW);
+            System.out.println("Case number " + caseNumber + " is opened. Status: " + getCaseStatus());
+            System.out.println("----------------------------");
+        } catch (InvalidCaseException e) {
+            System.out.println();
+            logger.error("Invalid case: " + e.getMessage() + "\n");
+        }
     }
 
     @Override

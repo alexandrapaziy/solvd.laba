@@ -4,13 +4,14 @@ import com.solvd.laba.oop.legalOffice.interfaces.Contactable;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Client extends Person implements Printable, Contactable {
     private static int clientCount;
     private String request;
-    private ContactInfo contactInfo;
+    private Set<ContactInfo> contactInfo;
 
-    public Client(String firstName, String lastName, int age, String request, ContactInfo contactInfo) {
+    public Client(String firstName, String lastName, int age, String request, Set<ContactInfo> contactInfo) {
         super(firstName, lastName, age);
         this.request = request;
         this.contactInfo = contactInfo;
@@ -25,11 +26,11 @@ public class Client extends Person implements Printable, Contactable {
         this.request = request;
     }
 
-    public ContactInfo getContactInfo() {
+    public Set<ContactInfo> getContactInfo() {
         return contactInfo;
     }
 
-    public void setContactInfo(ContactInfo contactInfo) {
+    public void setContactInfo(Set<ContactInfo> contactInfo) {
         this.contactInfo = contactInfo;
     }
 
@@ -45,8 +46,10 @@ public class Client extends Person implements Printable, Contactable {
     public void getContacts() {
         System.out.println("Contacts:");
         System.out.println("Name: " + getFirstName() + " " + getLastName());
-        System.out.println("Phone: " + contactInfo.getPhone());
-        System.out.println("Email: " + contactInfo.getEmail());
+        for (ContactInfo contactInfo : contactInfo) {
+            System.out.println("Phone: " + contactInfo.getPhone());
+            System.out.println("Email: " + contactInfo.getEmail());
+        }
         System.out.println("----------------------------");
     }
 

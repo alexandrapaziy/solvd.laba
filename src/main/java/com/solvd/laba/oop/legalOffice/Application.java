@@ -3,18 +3,25 @@ package com.solvd.laba.oop.legalOffice;
 import com.solvd.laba.oop.legalOffice.enums.CourtType;
 import com.solvd.laba.oop.legalOffice.enums.DocumentType;
 import com.solvd.laba.oop.legalOffice.enums.LawyerSpecializationType;
+import com.solvd.laba.oop.legalOffice.exceptions.InvalidContactInfoException;
+import com.solvd.laba.oop.legalOffice.exceptions.InvalidInvoiceException;
+import com.solvd.laba.oop.legalOffice.exceptions.PaymentFailedException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.solvd.laba.oop.legalOffice.Client.getClientCount;
 import static com.solvd.laba.oop.legalOffice.Employee.getEmployeeCount;
 
 public class Application {
-    public static void main(String[] args) {
+    private static final Logger logger = (Logger) LogManager.getLogger(Application.class);
 
+    public static void main(String[] args) throws PaymentFailedException, InvalidInvoiceException, InvalidContactInfoException {
         Court court = new Court("Central Civil Court", "city Kyiv", CourtType.CIVIL_COURT);
-        court.printDetails();
 
         ContactInfo employeeContact = new ContactInfo("987654321", "mariajonson@example.com");
         Employee employeeMaria = new Employee("Maria", "Jonson", 24, "administrator", 3, employeeContact);
@@ -34,30 +41,51 @@ public class Application {
 
         lawyerMike.getContacts();
 
-        ContactInfo clientContact = new ContactInfo("987654321", "alicesmith@example.com");
-        Client clientAlice = new Client("Alice", "Smith", 25, "Legal advice in civil law field", clientContact);
+        ContactInfo clientContact = new ContactInfo(null, null);
+        Set<ContactInfo> clientContacts = new HashSet<>();
+        clientContacts.add(clientContact);
+
+        Client clientAlice = new Client("Alice", "Smith", 25, "Legal advice in civil law field", clientContacts);
+        clientContact.setPhone("987654321");
+        clientContact.setEmail("alicesmith@example.com");
         clientAlice.printDetails();
         clientAlice.getContacts();
 
-        Case caseAlice = new Case(clientAlice, lawyerMike, "Needs property protection in the form of an apartment", 5);
+        Case caseAlice = new Case(null, lawyerMike, "Needs property protection in the form of an apartment", 5);
+        caseAlice.setClient(clientAlice);
         caseAlice.printDetails();
+
+        caseAlice.addToProcessingQueue("Gather evidence");
+        caseAlice.addToProcessingQueue("Interview witnesses");
+        caseAlice.addToProcessingQueue("Prepare legal documents");
+
+        caseAlice.processQueue();
 
         getClientCount();
 
-        Document document = new Document(DocumentType.STATEMENT, "Claim for recognition of property ownership in the order of inheritance");
+        Document document = new Document(null, "Claim for recognition of property ownership in the order of inheritance");
         document.printDetails();
         document.sign(clientAlice);
+        document.setDocumentType(DocumentType.STATEMENT);
+        document.sign(clientAlice);
         document.submitToCourt(court);
+
+        court.addCaseToCourt(caseAlice);
+        court.printDetails();
 
         court.issueCourtDecision(caseAlice, document, "Ownership is recognized");
         document.closeReview();
         caseAlice.closeReview();
 
-        Invoice invoice = new Invoice(caseAlice);
+        Invoice invoice = new Invoice(null);
+        invoice.issueInvoice();
+        invoice.setLegalCase(caseAlice);
         invoice.issueInvoice();
         invoice.sign(clientAlice);
 
-        lawyerMike.takeSalary();
+        invoice.processPayment(300);
+        invoice.processPayment(3000);
 
+        lawyerMike.takeSalary();
     }
 }
