@@ -6,9 +6,6 @@ import com.solvd.laba.oop.legalOffice.enums.DocumentStatus;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
 import com.solvd.laba.oop.legalOffice.list.CustomLinkedList;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Court extends LegalEntity implements Printable {
     private CourtType courtType;
     private CustomLinkedList<Case> cases;

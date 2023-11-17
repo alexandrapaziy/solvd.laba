@@ -6,8 +6,6 @@ import com.solvd.laba.oop.legalOffice.enums.LawyerSpecializationType;
 import com.solvd.laba.oop.legalOffice.exceptions.InvalidContactInfoException;
 import com.solvd.laba.oop.legalOffice.exceptions.InvalidInvoiceException;
 import com.solvd.laba.oop.legalOffice.exceptions.PaymentFailedException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Logger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,7 +16,6 @@ import static com.solvd.laba.oop.legalOffice.Client.getClientCount;
 import static com.solvd.laba.oop.legalOffice.Employee.getEmployeeCount;
 
 public class Application {
-    private static final Logger logger = (Logger) LogManager.getLogger(Application.class);
 
     public static void main(String[] args) throws PaymentFailedException, InvalidInvoiceException, InvalidContactInfoException {
         Court court = new Court("Central Civil Court", "city Kyiv", CourtType.CIVIL_COURT);

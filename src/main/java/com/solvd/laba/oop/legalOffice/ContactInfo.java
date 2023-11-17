@@ -5,19 +5,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 public class ContactInfo {
-    private static final Logger logger = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private String phone;
     private String email;
 
-    public ContactInfo(String phone, String email) {
-        try {
+    public ContactInfo(String phone, String email) throws InvalidContactInfoException {
+
             validateContactInfo(phone, email);
             this.phone = phone;
             this.email = email;
-        } catch (InvalidContactInfoException e) {
-            System.out.println();
-            logger.error("Invalid contact information: " + e.getMessage() + "\n");
-        }
+
     }
 
     public String getPhone() {
