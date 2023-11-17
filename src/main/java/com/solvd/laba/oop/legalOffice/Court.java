@@ -5,8 +5,11 @@ import com.solvd.laba.oop.legalOffice.enums.CourtType;
 import com.solvd.laba.oop.legalOffice.enums.DocumentStatus;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
 import com.solvd.laba.oop.legalOffice.list.CustomLinkedList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 public class Court extends LegalEntity implements Printable {
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private CourtType courtType;
     private CustomLinkedList<Case> cases;
 
@@ -26,31 +29,31 @@ public class Court extends LegalEntity implements Printable {
 
     public void addCaseToCourt(Case legalCase) {
         cases.add(legalCase);
-        System.out.println("Case " + legalCase.getCaseNumber() + " added to the court.");
+        LOGGER.info("Case " + legalCase.getCaseNumber() + " added to the court.");
     }
 
     public void issueCourtDecision(Case courtCase, Document courtDocument, String courtDecision) {
         if (courtDocument.getDocumentStatus() == DocumentStatus.SUBMITTED) {
-            System.out.println("Court decision issued for Case number " + courtCase.getCaseNumber() + ": " + courtDecision);
-            System.out.println("----------------------------");
+            LOGGER.info("Court decision issued for Case number " + courtCase.getCaseNumber() + ": " + courtDecision);
+            LOGGER.info("----------------------------");
             courtCase.setCaseStatus(CaseStatus.IN_COURT);
         } else {
-            System.out.println("Cannot issue court decision. Document is not submitted to the court.");
+            LOGGER.info("Cannot issue court decision. Document is not submitted to the court.");
         }
     }
 
     @Override
     public void printDetails() {
-        System.out.println("Court Details:");
-        System.out.println("Court Name: " + getEntityName());
-        System.out.println("Court Type: " + courtType);
-        System.out.println("Address: " + getAddress());
-        System.out.println("----------------------------");
-        System.out.println("Cases in Court:");
+        LOGGER.info("Court Details:");
+        LOGGER.info("Court Name: " + getEntityName());
+        LOGGER.info("Court Type: " + courtType);
+        LOGGER.info("Address: " + getAddress());
+        LOGGER.info("----------------------------");
+        LOGGER.info("Cases in Court:");
         for (int i = 0; i < cases.size(); i++) {
             Case legalCase = cases.get(i);
-            System.out.println("Case Number: " + legalCase.getCaseNumber());
+            LOGGER.info("Case Number: " + legalCase.getCaseNumber());
         }
-        System.out.println("----------------------------");
+        LOGGER.info("----------------------------");
     }
 }

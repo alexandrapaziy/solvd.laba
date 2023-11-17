@@ -1,11 +1,8 @@
 package com.solvd.laba.oop.legalOffice;
 
 import com.solvd.laba.oop.legalOffice.exceptions.InvalidContactInfoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Logger;
 
 public class ContactInfo {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private String phone;
     private String email;
 

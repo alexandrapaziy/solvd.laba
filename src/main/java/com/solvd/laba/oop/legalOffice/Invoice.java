@@ -20,7 +20,7 @@ public final class Invoice implements Signable, Payable {
     private final int invoiceNumber;
     private Date dueDate;
     private Case legalCase;
-    private Map<Integer, Double> invoiceInfo; // Integer - номер рахунку, Double - сума оплати
+    private Map<Integer, Double> invoiceInfo;
 
     static {
         invoiceNumberCounter = initialInvoiceNumber;
@@ -75,7 +75,7 @@ public final class Invoice implements Signable, Payable {
         }
     }
 
-    public void issueInvoice() throws InvalidInvoiceException {
+    public void issueInvoice() {
         try (PrintWriter writer = new PrintWriter(new FileWriter("invoice.txt"))) {
             validateInvoice();
 
@@ -87,29 +87,27 @@ public final class Invoice implements Signable, Payable {
             writer.println("Amount: " + makePayment() + " $");
             writer.println("----------------------------");
         } catch (InvalidInvoiceException | IOException e) {
-            System.out.println();
             LOGGER.error("Invalid invoice: " + e.getMessage() + "\n");
         }
     }
 
     @Override
     public void sign(Client client) {
-        System.out.println("Invoice signed by " + client.firstName + " " + client.lastName + ".");
-        System.out.println("----------------------------");
+        LOGGER.info("Invoice signed by " + client.firstName + " " + client.lastName + ".");
+        LOGGER.info("----------------------------");
     }
 
-    public void processPayment(double money) throws PaymentFailedException {
+    public void processPayment(double money) {
         try {
             double amount = makePayment();
             if (money == amount) {
-                System.out.println("Was paid.");
-                System.out.println("----------------------------");
+                LOGGER.info("Was paid.");
+                LOGGER.info("----------------------------");
             }
             if (money < amount) {
                 throw new PaymentFailedException("Wasn't paid (not enough money).");
             }
         } catch (PaymentFailedException e) {
-            System.out.println();
             LOGGER.error("Payment failed: " + e.getMessage() + "\n");
         }
     }

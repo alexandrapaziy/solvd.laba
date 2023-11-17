@@ -60,8 +60,8 @@ public class Document implements Signable, Printable, Reviewable {
     public void openReview() {
         this.setDocumentStatus(DocumentStatus.DEVELOPMENT);
         this.setCreationDate(new Date());
-        System.out.println("Document created and open for review. Status: " + getDocumentStatus());
-        System.out.println("----------------------------");
+        LOGGER.info("Document created and open for review. Status: " + getDocumentStatus());
+        LOGGER.info("----------------------------");
     }
 
     private void validateDocument() throws InvalidDocumentException {
@@ -84,8 +84,8 @@ public class Document implements Signable, Printable, Reviewable {
             validateDocument();
 
             this.setDocumentStatus(DocumentStatus.SIGNED);
-            System.out.println("Document signed by " + client.firstName + " " + client.lastName + ". Status: " + getDocumentStatus());
-            System.out.println("----------------------------");
+            LOGGER.info("Document signed by " + client.firstName + " " + client.lastName + ". Status: " + getDocumentStatus());
+            LOGGER.info("----------------------------");
         } catch (InvalidDocumentException e) {
             System.out.println();
             LOGGER.error("Invalid document: " + e.getMessage() + "\n");
@@ -94,24 +94,24 @@ public class Document implements Signable, Printable, Reviewable {
 
     public void submitToCourt(Court court) {
         this.setDocumentStatus(DocumentStatus.SUBMITTED);
-        System.out.println("Document submitted to court " + court.getEntityName() + ". Status: " + getDocumentStatus());
-        System.out.println("----------------------------");
+        LOGGER.info("Document submitted to court " + court.getEntityName() + ". Status: " + getDocumentStatus());
+        LOGGER.info("----------------------------");
     }
 
     @Override
     public void closeReview() {
         this.setDocumentStatus(DocumentStatus.CLOSED);
-        System.out.println("Document close for review. Status: " + getDocumentStatus());
-        System.out.println("----------------------------");
+        LOGGER.info("Document close for review. Status: " + getDocumentStatus());
+        LOGGER.info("----------------------------");
     }
 
     @Override
     public void printDetails() {
-        System.out.println("Document Details:");
-        System.out.println("Document type: " + documentType);
-        System.out.println("Document content: " + documentContent);
-        System.out.println("Creation date: " + creationDate);
-        System.out.println("Document status: " + documentStatus);
-        System.out.println("----------------------------");
+        LOGGER.info("Document Details:");
+        LOGGER.info("Document type: " + documentType);
+        LOGGER.info("Document content: " + documentContent);
+        LOGGER.info("Creation date: " + creationDate);
+        LOGGER.info("Document status: " + documentStatus);
+        LOGGER.info("----------------------------");
     }
 }
