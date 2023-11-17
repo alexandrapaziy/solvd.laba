@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Queue;
 
 public final class Case implements Printable, Reviewable {
-    private static final Logger logger = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private static int initialCaseNumber = 1000;
     private static int caseNumberCounter = 0;
     private final int caseNumber;
@@ -124,7 +124,7 @@ public final class Case implements Printable, Reviewable {
             System.out.println("----------------------------");
         } catch (InvalidCaseException e) {
             System.out.println();
-            logger.error("Invalid case: " + e.getMessage() + "\n");
+            LOGGER.error("Invalid case: " + e.getMessage() + "\n");
         }
     }
 

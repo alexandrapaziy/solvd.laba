@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Map;
 
 public final class Invoice implements Signable, Payable {
-    private static final Logger logger = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private static int initialInvoiceNumber = 1000;
     private static int invoiceNumberCounter = 0;
     private final int invoiceNumber;
@@ -88,7 +88,7 @@ public final class Invoice implements Signable, Payable {
             writer.println("----------------------------");
         } catch (InvalidInvoiceException | IOException e) {
             System.out.println();
-            logger.error("Invalid invoice: " + e.getMessage() + "\n");
+            LOGGER.error("Invalid invoice: " + e.getMessage() + "\n");
         }
     }
 
@@ -110,7 +110,7 @@ public final class Invoice implements Signable, Payable {
             }
         } catch (PaymentFailedException e) {
             System.out.println();
-            logger.error("Payment failed: " + e.getMessage() + "\n");
+            LOGGER.error("Payment failed: " + e.getMessage() + "\n");
         }
     }
 }

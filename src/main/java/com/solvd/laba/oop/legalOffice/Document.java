@@ -12,7 +12,7 @@ import org.apache.logging.log4j.core.Logger;
 import java.util.Date;
 
 public class Document implements Signable, Printable, Reviewable {
-    private static final Logger logger = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private DocumentType documentType;
     private String documentContent;
     private Date creationDate;
@@ -88,7 +88,7 @@ public class Document implements Signable, Printable, Reviewable {
             System.out.println("----------------------------");
         } catch (InvalidDocumentException e) {
             System.out.println();
-            logger.error("Invalid document: " + e.getMessage() + "\n");
+            LOGGER.error("Invalid document: " + e.getMessage() + "\n");
         }
     }
 
