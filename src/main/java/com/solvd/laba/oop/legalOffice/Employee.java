@@ -2,8 +2,11 @@ package com.solvd.laba.oop.legalOffice;
 
 import com.solvd.laba.oop.legalOffice.interfaces.Contactable;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 public class Employee extends Person implements Printable, Contactable {
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private static int employeeCount = 0;
     protected String position;
     protected int experienceYears;
@@ -43,25 +46,25 @@ public class Employee extends Person implements Printable, Contactable {
 
     @Override
     public void printDetails() {
-        System.out.println("Employee Information:");
-        System.out.println("Name: " + getFirstName() + " " + getLastName());
-        System.out.println("Position: " + position);
-        System.out.println("Experience: " + experienceYears + " years");
-        System.out.println("----------------------------");
+        LOGGER.info("Employee Information:");
+        LOGGER.info("Name: " + getFirstName() + " " + getLastName());
+        LOGGER.info("Position: " + position);
+        LOGGER.info("Experience: " + experienceYears + " years");
+        LOGGER.info("----------------------------");
     }
 
     @Override
     public void getContacts() {
-        System.out.println("Contacts:");
-        System.out.println("Name: " + getFirstName() + " " + getLastName());
-        System.out.println("Phone: " + contactInfo.getPhone());
-        System.out.println("Email: " + contactInfo.getEmail());
-        System.out.println("----------------------------");
+        LOGGER.info("Contacts:");
+        LOGGER.info("Name: " + getFirstName() + " " + getLastName());
+        LOGGER.info("Phone: " + contactInfo.getPhone());
+        LOGGER.info("Email: " + contactInfo.getEmail());
+        LOGGER.info("----------------------------");
     }
 
     public static final int getEmployeeCount() {
-        System.out.println("Total employee count: " + employeeCount);
-        System.out.println("----------------------------");
+        LOGGER.info("Total employee count: " + employeeCount);
+        LOGGER.info("----------------------------");
         return employeeCount;
     }
 }

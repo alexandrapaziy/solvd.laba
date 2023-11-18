@@ -1,6 +1,6 @@
 Invoice Information:
 Invoice Number: 1000
-Invoice Date: Wed Nov 15 01:39:52 EET 2023
+Invoice Date: Fri Nov 17 21:12:46 EET 2023
 Case number: 1000
 Client payer: Alice Smith
 Amount: 3000.0 $

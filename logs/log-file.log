@@ -1,10 +1,8 @@
-01:39:52.736 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Invalid contact information: Phone or email is null or empty.
+21:12:46.654 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Invalid case: Client, lawyer, or case description is null or empty.
 
-01:39:52.740 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Invalid case: Client, lawyer, or case description is null or empty.
+21:12:46.681 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Invalid document: Document type or content is null.
 
-01:39:52.749 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Invalid document: Document type or content is null.
+21:12:46.691 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Invalid invoice: Invoice 1000 has some wrong data.
 
-01:39:52.754 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Invalid invoice: Invoice 1000 has some wrong data.
-
-01:39:52.757 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Payment failed: Wasn't paid (not enough money).
+21:12:46.698 [main] ERROR com.solvd.laba.oop.legalOffice.Application - Payment failed: Wasn't paid (not enough money).
 

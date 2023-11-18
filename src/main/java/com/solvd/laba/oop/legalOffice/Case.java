@@ -91,17 +91,17 @@ public final class Case implements Printable, Reviewable {
 
     public void addToProcessingQueue(String task) {
         caseProcessingQueue.offer(task);
-        System.out.println("Task added to the processing queue for Case " + caseNumber + ": " + task);
+        LOGGER.info("Task added to the processing queue for Case " + caseNumber + ": " + task);
     }
 
     public void processQueue() {
-        System.out.println("Processing tasks in the queue for Case " + caseNumber + ":");
+        LOGGER.info("Processing tasks in the queue for Case " + caseNumber + ":");
         while (!caseProcessingQueue.isEmpty()) {
             String task = caseProcessingQueue.poll();
-            System.out.println("Processing task: " + task);
+            LOGGER.info("Processing task: " + task);
         }
-        System.out.println("All tasks processed for Case " + caseNumber);
-        System.out.println("----------------------------");
+        LOGGER.info("All tasks processed for Case " + caseNumber);
+        LOGGER.info("----------------------------");
     }
 
     private void validateCase() throws InvalidCaseException {
@@ -120,10 +120,9 @@ public final class Case implements Printable, Reviewable {
             validateCase();
 
             this.setCaseStatus(CaseStatus.IN_REVIEW);
-            System.out.println("Case number " + caseNumber + " is opened. Status: " + getCaseStatus());
-            System.out.println("----------------------------");
+            LOGGER.info("Case number " + caseNumber + " is opened. Status: " + getCaseStatus());
+            LOGGER.info("----------------------------");
         } catch (InvalidCaseException e) {
-            System.out.println();
             LOGGER.error("Invalid case: " + e.getMessage() + "\n");
         }
     }
@@ -131,20 +130,19 @@ public final class Case implements Printable, Reviewable {
     @Override
     public void closeReview() {
         this.setCaseStatus(CaseStatus.CLOSED);
-        System.out.println("Case number " + caseNumber + " is closed.");
-        System.out.println("----------------------------");
+        LOGGER.info("Case number " + caseNumber + " is closed.");
+        LOGGER.info("----------------------------");
     }
 
     @Override
     public void printDetails() {
-        System.out.println("Case Information:");
-        System.out.println("Case Number: " + caseNumber);
-        System.out.println("Case Description: " + caseDescription);
-        System.out.println("Case Status: " + caseStatus);
-        System.out.println("Case Complexity: " + caseComplexity);
-        System.out.println("Client: " + client.getFirstName() + " " + client.getLastName());
-        System.out.println("Lawyer: " + lawyer.getFirstName() + " " + lawyer.getLastName());
-        System.out.println("----------------------------");
+        LOGGER.info("Case Information:");
+        LOGGER.info("Case Number: " + caseNumber);
+        LOGGER.info("Case Description: " + caseDescription);
+        LOGGER.info("Case Status: " + caseStatus);
+        LOGGER.info("Case Complexity: " + caseComplexity);
+        LOGGER.info("Lawyer: " + lawyer.getFirstName() + " " + lawyer.getLastName());
+        LOGGER.info("----------------------------");
     }
 
     @Override

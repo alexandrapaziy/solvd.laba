@@ -2,11 +2,14 @@ package com.solvd.laba.oop.legalOffice;
 
 import com.solvd.laba.oop.legalOffice.interfaces.Contactable;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 import java.util.Objects;
 import java.util.Set;
 
 public class Client extends Person implements Printable, Contactable {
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private static int clientCount;
     private String request;
     private Set<ContactInfo> contactInfo;
@@ -36,26 +39,26 @@ public class Client extends Person implements Printable, Contactable {
 
     @Override
     public void printDetails() {
-        System.out.println("Client Information:");
-        System.out.println("Name: " + getFirstName() + " " + getLastName());
-        System.out.println("Request: " + request);
-        System.out.println("----------------------------");
+        LOGGER.info("Client Information:");
+        LOGGER.info("Name: " + getFirstName() + " " + getLastName());
+        LOGGER.info("Request: " + request);
+        LOGGER.info("----------------------------");
     }
 
     @Override
     public void getContacts() {
-        System.out.println("Contacts:");
-        System.out.println("Name: " + getFirstName() + " " + getLastName());
+        LOGGER.info("Contacts:");
+        LOGGER.info("Name: " + getFirstName() + " " + getLastName());
         for (ContactInfo contactInfo : contactInfo) {
-            System.out.println("Phone: " + contactInfo.getPhone());
-            System.out.println("Email: " + contactInfo.getEmail());
+            LOGGER.info("Phone: " + contactInfo.getPhone());
+            LOGGER.info("Email: " + contactInfo.getEmail());
         }
-        System.out.println("----------------------------");
+        LOGGER.info("----------------------------");
     }
 
     public static final int getClientCount() {
-        System.out.println("Total client count: " + clientCount);
-        System.out.println("----------------------------");
+        LOGGER.info("Total client count: " + clientCount);
+        LOGGER.info("----------------------------");
         return clientCount;
     }
 

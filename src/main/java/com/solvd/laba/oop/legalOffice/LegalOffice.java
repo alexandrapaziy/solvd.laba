@@ -1,10 +1,13 @@
 package com.solvd.laba.oop.legalOffice;
 
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 import java.util.List;
 
 public class LegalOffice extends LegalEntity implements Printable {
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private List<Employee> employees;
 
     public LegalOffice(String entityName, String address, List<Employee> employees) {
@@ -22,13 +25,13 @@ public class LegalOffice extends LegalEntity implements Printable {
 
     @Override
     public void printDetails() {
-        System.out.println("Legal Office Details:");
-        System.out.println("Name: " + getEntityName());
-        System.out.println("Address: " + getAddress());
-        System.out.println("Employees: ");
+        LOGGER.info("Legal Office Details:");
+        LOGGER.info("Name: " + getEntityName());
+        LOGGER.info("Address: " + getAddress());
+        LOGGER.info("Employees: ");
         for (Employee employee : employees) {
             employee.printDetails();
         }
-        System.out.println("----------------------------");
+        LOGGER.info("----------------------------");
     }
 }

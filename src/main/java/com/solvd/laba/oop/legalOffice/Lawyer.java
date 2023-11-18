@@ -2,16 +2,15 @@ package com.solvd.laba.oop.legalOffice;
 
 import com.solvd.laba.oop.legalOffice.enums.LawyerSpecializationType;
 import com.solvd.laba.oop.legalOffice.interfaces.Payable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Lawyer extends Employee implements Payable {
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
     private final String license;
     private LawyerSpecializationType specialization;
-
-    List<Employee> employees = new ArrayList<>();
 
     public Lawyer(String firstName, String lastName, int age, String position, int experienceYears,
                   ContactInfo contactInfo, String license, LawyerSpecializationType specialization) {
@@ -64,9 +63,9 @@ public class Lawyer extends Employee implements Payable {
     }
 
     public final void takeSalary() {
-        System.out.println("Salary Information:");
-        System.out.println("Lawyer: " + getFirstName() + " " + getLastName());
-        System.out.println("Amount: " + makePayment() + " $");
-        System.out.println("----------------------------");
+        LOGGER.info("Salary Information:");
+        LOGGER.info("Lawyer: " + getFirstName() + " " + getLastName());
+        LOGGER.info("Amount: " + makePayment() + " $");
+        LOGGER.info("----------------------------");
     }
 }
