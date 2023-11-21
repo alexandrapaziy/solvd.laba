@@ -87,7 +87,6 @@ public class Document implements Signable, Printable, Reviewable {
             LOGGER.info("Document signed by " + client.firstName + " " + client.lastName + ". Status: " + getDocumentStatus());
             LOGGER.info("----------------------------");
         } catch (InvalidDocumentException e) {
-            System.out.println();
             LOGGER.error("Invalid document: " + e.getMessage() + "\n");
         }
     }
