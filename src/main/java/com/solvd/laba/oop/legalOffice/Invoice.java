@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Map;
 
 public final class Invoice implements Signable, Payable {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Invoice.class);
     private static int initialInvoiceNumber = 1000;
     private static int invoiceNumberCounter = 0;
     private final int invoiceNumber;

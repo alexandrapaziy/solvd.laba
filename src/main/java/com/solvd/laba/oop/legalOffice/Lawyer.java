@@ -8,7 +8,7 @@ import org.apache.logging.log4j.core.Logger;
 import java.util.Objects;
 
 public class Lawyer extends Employee implements Payable {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Lawyer.class);
     private final String license;
     private LawyerSpecializationType specialization;
 

@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 public class Court extends LegalEntity implements Printable {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Court.class);
     private CourtType courtType;
     private CustomLinkedList<Case> cases;
 

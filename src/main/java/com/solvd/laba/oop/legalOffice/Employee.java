@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 public class Employee extends Person implements Printable, Contactable {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Employee.class);
     private static int employeeCount = 0;
     protected String position;
     protected int experienceYears;

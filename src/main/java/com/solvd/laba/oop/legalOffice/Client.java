@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Client extends Person implements Printable, Contactable {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Client.class);
     private static int clientCount;
     private String request;
     private Set<ContactInfo> contactInfo;

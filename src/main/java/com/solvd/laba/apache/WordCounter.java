@@ -1,6 +1,5 @@
 package com.solvd.laba.apache;
 
-import com.solvd.laba.oop.legalOffice.Application;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.commons.io.FileUtils;
@@ -12,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class WordCounter {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(WordCounter.class);
 
     public static void main(String[] args) {
         try {
