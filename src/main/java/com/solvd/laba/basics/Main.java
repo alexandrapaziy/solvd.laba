@@ -1,3 +1,5 @@
+package com.solvd.laba.basics;
+
 import com.solvd.laba.basics.BubbleSort;
 import com.solvd.laba.basics.InsertionSort;
 import com.solvd.laba.basics.QuickSort;

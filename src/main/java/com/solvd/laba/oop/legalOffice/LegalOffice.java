@@ -7,7 +7,7 @@ import org.apache.logging.log4j.core.Logger;
 import java.util.List;
 
 public class LegalOffice extends LegalEntity implements Printable {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(LegalOffice.class);
     private List<Employee> employees;
 
     public LegalOffice(String entityName, String address, List<Employee> employees) {

@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Queue;
 
 public final class Case implements Printable, Reviewable {
-    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Case.class);
     private static int initialCaseNumber = 1000;
     private static int caseNumberCounter = 0;
     private final int caseNumber;
