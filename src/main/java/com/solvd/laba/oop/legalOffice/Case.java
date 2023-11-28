@@ -4,12 +4,14 @@ import com.solvd.laba.oop.legalOffice.enums.CaseStatus;
 import com.solvd.laba.oop.legalOffice.exceptions.InvalidCaseException;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
 import com.solvd.laba.oop.legalOffice.interfaces.Reviewable;
+import com.solvd.laba.oop.legalOffice.interfaces.ThreeParameterFunctionalInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.function.UnaryOperator;
 
 public final class Case implements Printable, Reviewable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Case.class);
@@ -143,6 +145,14 @@ public final class Case implements Printable, Reviewable {
         LOGGER.info("Case Complexity: " + caseComplexity);
         LOGGER.info("Lawyer: " + lawyer.getFirstName() + " " + lawyer.getLastName());
         LOGGER.info("----------------------------");
+    }
+
+    public void performActionWithClientLawyerAndCaseDescription(ThreeParameterFunctionalInterface<Client, Lawyer, String> action) {
+        action.performAction(client, lawyer, caseDescription);
+    }
+
+    public int getDoubledComplexity(UnaryOperator<Integer> complexityDoubler) {
+        return complexityDoubler.apply(caseComplexity);
     }
 
     @Override

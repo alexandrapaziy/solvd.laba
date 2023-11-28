@@ -6,6 +6,8 @@ import com.solvd.laba.oop.legalOffice.enums.LawyerSpecializationType;
 import com.solvd.laba.oop.legalOffice.exceptions.InvalidContactInfoException;
 import com.solvd.laba.oop.legalOffice.exceptions.InvalidInvoiceException;
 import com.solvd.laba.oop.legalOffice.exceptions.PaymentFailedException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +18,7 @@ import static com.solvd.laba.oop.legalOffice.Client.getClientCount;
 import static com.solvd.laba.oop.legalOffice.Employee.getEmployeeCount;
 
 public class Application {
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
 
     public static void main(String[] args) throws PaymentFailedException, InvalidInvoiceException, InvalidContactInfoException {
         Court court = new Court("Central Civil Court", "city Kyiv", CourtType.CIVIL_COURT);
@@ -44,11 +47,34 @@ public class Application {
 
         Client clientAlice = new Client("Alice", "Smith", 25, "Legal advice in civil law field", clientContacts);
         clientAlice.printDetails();
+        int length = clientAlice.getFullNameLength(client -> client.getFirstName() + " " + client.getLastName());
+        LOGGER.info("Client full name length is: " + length);
         clientAlice.getContacts();
 
-        Case caseAlice = new Case(null, lawyerMike, "Needs property protection in the form of an apartment", 5);
+        clientAlice.performActionWithContactInfo(contactInfo -> {
+            for (ContactInfo contact : contactInfo) {
+                if (contact != null) {
+                    LOGGER.info("Phone: " + contact.getPhone());
+                } else {
+                    LOGGER.warn("No contact information available.");
+                }
+            }
+        });
+
+        boolean isCivilLawSpecialist = lawyerMike.isSpecialized((lawyer, specialization) -> lawyer.getSpecialization() == specialization, LawyerSpecializationType.CIVIL_LAW);
+        if (isCivilLawSpecialist) {
+            LOGGER.info("Lawyer" + lawyerMike.getFirstName() + " " + lawyerMike.getLastName() + " is specialist in civil law");
+        } else {
+            LOGGER.info("Lawyer" + lawyerMike.getFirstName() + " " + lawyerMike.getLastName() + " is not specialist in civil law");
+        }
+
+        Case caseAlice = new Case(null, lawyerMike, "Needs property protection in the form of an apartment", 3);
         caseAlice.setClient(clientAlice);
         caseAlice.printDetails();
+
+        caseAlice.performActionWithClientLawyerAndCaseDescription((client, lawyer, caseDescription) ->
+                LOGGER.info("Case details: Client - " + client.getFirstName() + " " + client.lastName +
+                        ", Lawyer - " + lawyer.getFirstName() + " " + lawyer.getLastName() + ", Description - " + caseDescription));
 
         caseAlice.addToProcessingQueue("Gather evidence");
         caseAlice.addToProcessingQueue("Interview witnesses");
@@ -57,6 +83,8 @@ public class Application {
         caseAlice.processQueue();
 
         getClientCount();
+        int doubledComplexity = caseAlice.getDoubledComplexity(complexity -> complexity * 2);
+        LOGGER.info("Еhe complexity of the case has been doubled because the case is going to court, now complexity is: " + doubledComplexity);
 
         Document document = new Document(null, "Claim for recognition of property ownership in the order of inheritance");
         document.printDetails();
@@ -78,8 +106,18 @@ public class Application {
         invoice.issueInvoice();
         invoice.sign(clientAlice);
 
+        boolean isEvenPayment = invoice.isPaymentEven(amount -> amount % 2 == 0);
+        if (isEvenPayment) {
+            LOGGER.info("Payment amount is even");
+        } else {
+            LOGGER.info("Payment amount is not even");
+        }
+
         invoice.processPayment(300);
         invoice.processPayment(3000);
+
+        invoice.performActionWithClientAndInvoiceNumber((client, invoiceNumber) ->
+                LOGGER.info("Invoice " + invoiceNumber + " paid by " + client.firstName + " " + client.lastName));
 
         lawyerMike.takeSalary();
     }

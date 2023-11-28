@@ -4,6 +4,7 @@ import com.solvd.laba.oop.legalOffice.exceptions.InvalidInvoiceException;
 import com.solvd.laba.oop.legalOffice.exceptions.PaymentFailedException;
 import com.solvd.laba.oop.legalOffice.interfaces.Payable;
 import com.solvd.laba.oop.legalOffice.interfaces.Signable;
+import com.solvd.laba.oop.legalOffice.interfaces.TwoParameterFunctionalInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public final class Invoice implements Signable, Payable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Invoice.class);
@@ -110,5 +112,14 @@ public final class Invoice implements Signable, Payable {
         } catch (PaymentFailedException e) {
             LOGGER.error("Payment failed: " + e.getMessage() + "\n");
         }
+    }
+
+    public void performActionWithClientAndInvoiceNumber(TwoParameterFunctionalInterface<Client, Integer> action) {
+        action.performAction(legalCase.getClient(), getInvoiceNumber());
+    }
+
+    public boolean isPaymentEven(Predicate<Double> paymentChecker) {
+        double paymentAmount = makePayment();
+        return paymentChecker.test(paymentAmount);
     }
 }
