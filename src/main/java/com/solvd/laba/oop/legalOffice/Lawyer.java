@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import java.util.Objects;
+import java.util.function.BiPredicate;
+import java.util.function.Supplier;
 
 public class Lawyer extends Employee implements Payable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Lawyer.class);
@@ -58,8 +60,9 @@ public class Lawyer extends Employee implements Payable {
     public final double makePayment() {
         double baseSalary = 5000.0;
         double experienceFactor = 1 + (getExperienceYears() / 10.0);
+        double bonus = this.getRandomBonus(Math::random);
 
-        return baseSalary * experienceFactor;
+        return baseSalary * experienceFactor + bonus;
     }
 
     public final void takeSalary() {
@@ -67,5 +70,13 @@ public class Lawyer extends Employee implements Payable {
         LOGGER.info("Lawyer: " + getFirstName() + " " + getLastName());
         LOGGER.info("Amount: " + makePayment() + " $");
         LOGGER.info("----------------------------");
+    }
+
+    public double getRandomBonus(Supplier<Double> randomBonusGenerator) {
+        return randomBonusGenerator.get();
+    }
+
+    public boolean isSpecialized(BiPredicate<Lawyer, LawyerSpecializationType> specializationChecker, LawyerSpecializationType specializationType) {
+        return specializationChecker.test(this, specializationType);
     }
 }

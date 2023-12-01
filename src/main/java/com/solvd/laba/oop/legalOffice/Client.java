@@ -2,11 +2,13 @@ package com.solvd.laba.oop.legalOffice;
 
 import com.solvd.laba.oop.legalOffice.interfaces.Contactable;
 import com.solvd.laba.oop.legalOffice.interfaces.Printable;
+import com.solvd.laba.oop.legalOffice.interfaces.SingleParameterFunctionalInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 public class Client extends Person implements Printable, Contactable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Client.class);
@@ -60,6 +62,15 @@ public class Client extends Person implements Printable, Contactable {
         LOGGER.info("Total client count: " + clientCount);
         LOGGER.info("----------------------------");
         return clientCount;
+    }
+
+    public void performActionWithContactInfo(SingleParameterFunctionalInterface<Set<ContactInfo>> action) {
+        action.performAction(contactInfo);
+    }
+
+    public int getFullNameLength(Function<Client, String> fullNameProvider) {
+        String fullName = fullNameProvider.apply(this);
+        return fullName.length();
     }
 
     @Override
