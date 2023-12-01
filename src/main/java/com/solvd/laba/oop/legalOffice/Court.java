@@ -8,15 +8,18 @@ import com.solvd.laba.oop.legalOffice.list.CustomLinkedList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
+import java.util.LinkedList;
+import java.util.stream.Stream;
+
 public class Court extends LegalEntity implements Printable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Court.class);
     private CourtType courtType;
-    private CustomLinkedList<Case> cases;
+    private LinkedList<Case> cases;
 
     public Court(String entityName, String address, CourtType courtType) {
         super(entityName, address);
         this.courtType = courtType;
-        this.cases = new CustomLinkedList<>();
+        this.cases = new LinkedList<>();
     }
 
     public CourtType getCourtType() {
@@ -40,6 +43,10 @@ public class Court extends LegalEntity implements Printable {
         } else {
             LOGGER.info("Cannot issue court decision. Document is not submitted to the court.");
         }
+    }
+
+    public Stream<Case> getCaseStream() {
+        return cases.stream();
     }
 
     @Override

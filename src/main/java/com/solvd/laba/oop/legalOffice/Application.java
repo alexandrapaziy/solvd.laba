@@ -1,18 +1,14 @@
 package com.solvd.laba.oop.legalOffice;
 
+import com.solvd.laba.oop.legalOffice.enums.CaseStatus;
 import com.solvd.laba.oop.legalOffice.enums.CourtType;
 import com.solvd.laba.oop.legalOffice.enums.DocumentType;
 import com.solvd.laba.oop.legalOffice.enums.LawyerSpecializationType;
 import com.solvd.laba.oop.legalOffice.exceptions.InvalidContactInfoException;
-import com.solvd.laba.oop.legalOffice.exceptions.InvalidInvoiceException;
-import com.solvd.laba.oop.legalOffice.exceptions.PaymentFailedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.solvd.laba.oop.legalOffice.Client.getClientCount;
 import static com.solvd.laba.oop.legalOffice.Employee.getEmployeeCount;
@@ -38,6 +34,23 @@ public class Application {
         office.printDetails();
 
         getEmployeeCount();
+
+        long employeeCount = office.getEmployeeStream().count();
+        LOGGER.info("Number of employees: " + employeeCount);
+
+        office.getEmployeeStream()
+                .filter(employee -> employee.getAge() > 30)
+                .map(Employee::getFirstName)
+                .forEach(firstName -> LOGGER.info("Employee name: " + firstName));
+
+        office.getEmployeeStream()
+                .filter(employee -> employee.getExperienceYears() > 5)
+                .filter(employee -> employee.getPosition().equals("Senior Lawyer"))
+                .forEach(employee -> {
+                    LOGGER.info("Employee: " + employee.getFirstName() + " " + employee.getLastName());
+                    LOGGER.info("Experience Years: " + employee.getExperienceYears());
+                    LOGGER.info("Position: " + employee.getPosition());
+                });
 
         lawyerMike.getContacts();
 
@@ -95,6 +108,29 @@ public class Application {
 
         court.addCaseToCourt(caseAlice);
         court.printDetails();
+
+        boolean isInCourt = court.getCaseStream()
+                .anyMatch(c -> c.getCaseStatus() == CaseStatus.IN_COURT);
+        LOGGER.info("Is there any case in court? " + isInCourt);
+
+        court.getCaseStream()
+                .map(Case::getCaseDescription)
+                .distinct()
+                .forEach(description -> LOGGER.info("Case Description: " + description));
+
+        double averageComplexity = court.getCaseStream()
+                .mapToInt(Case::getCaseComplexity)
+                .average()
+                .orElse(0.0);
+        LOGGER.info("Average case complexity: " + averageComplexity);
+
+        Optional<Case> lastCase = court.getCaseStream()
+                .max(Comparator.comparingInt(Case::getCaseNumber));
+
+        lastCase.ifPresent(caseObject -> {
+            LOGGER.info("Max Case Number: " + caseObject.getCaseNumber());
+            LOGGER.info("Case Description: " + caseObject.getCaseDescription());
+        });
 
         court.issueCourtDecision(caseAlice, document, "Ownership is recognized");
         document.closeReview();
