@@ -20,7 +20,7 @@ import static com.solvd.laba.oop.legalOffice.Employee.getEmployeeCount;
 public class Application {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Application.class);
 
-    public static void main(String[] args) throws PaymentFailedException, InvalidInvoiceException, InvalidContactInfoException {
+    public static void main(String[] args) throws InvalidContactInfoException {
         Court court = new Court("Central Civil Court", "city Kyiv", CourtType.CIVIL_COURT);
 
         ContactInfo employeeContact = new ContactInfo("987654321", "mariajonson@example.com");
