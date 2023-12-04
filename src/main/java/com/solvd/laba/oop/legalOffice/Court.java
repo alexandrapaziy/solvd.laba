@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import java.util.LinkedList;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public class Court extends LegalEntity implements Printable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Court.class);
@@ -30,6 +30,14 @@ public class Court extends LegalEntity implements Printable {
         this.courtType = courtType;
     }
 
+    public LinkedList<Case> getCases() {
+        return cases;
+    }
+
+    public void setCases(LinkedList<Case> cases) {
+        this.cases = cases;
+    }
+
     public void addCaseToCourt(Case legalCase) {
         cases.add(legalCase);
         LOGGER.info("Case " + legalCase.getCaseNumber() + " added to the court.");
@@ -45,10 +53,6 @@ public class Court extends LegalEntity implements Printable {
         }
     }
 
-    public Stream<Case> getCaseStream() {
-        return cases.stream();
-    }
-
     @Override
     public void printDetails() {
         LOGGER.info("Court Details:");
@@ -57,10 +61,12 @@ public class Court extends LegalEntity implements Printable {
         LOGGER.info("Address: " + getAddress());
         LOGGER.info("----------------------------");
         LOGGER.info("Cases in Court:");
-        for (int i = 0; i < cases.size(); i++) {
-            Case legalCase = cases.get(i);
-            LOGGER.info("Case Number: " + legalCase.getCaseNumber());
-        }
+
+        String caseNumbers = cases.stream()
+                .map(legalCase -> String.valueOf(legalCase.getCaseNumber()))
+                .collect(Collectors.joining(", "));
+
+        LOGGER.info("Cases in Court: " + caseNumbers);
         LOGGER.info("----------------------------");
     }
 }

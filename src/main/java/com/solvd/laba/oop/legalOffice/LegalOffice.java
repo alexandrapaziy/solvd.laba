@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class LegalOffice extends LegalEntity implements Printable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(LegalOffice.class);
@@ -14,10 +13,6 @@ public class LegalOffice extends LegalEntity implements Printable {
     public LegalOffice(String entityName, String address, List<Employee> employees) {
         super(entityName, address);
         this.employees = employees;
-    }
-
-    public Stream<Employee> getEmployeeStream() {
-        return employees.stream();
     }
 
     public List<Employee> getEmployees() {

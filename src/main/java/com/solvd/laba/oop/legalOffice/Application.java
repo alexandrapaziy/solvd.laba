@@ -35,15 +35,15 @@ public class Application {
 
         getEmployeeCount();
 
-        long employeeCount = office.getEmployeeStream().count();
+        long employeeCount = office.getEmployees().stream().count();
         LOGGER.info("Number of employees: " + employeeCount);
 
-        office.getEmployeeStream()
+        office.getEmployees().stream()
                 .filter(employee -> employee.getAge() > 30)
                 .map(Employee::getFirstName)
                 .forEach(firstName -> LOGGER.info("Employee name: " + firstName));
 
-        office.getEmployeeStream()
+        office.getEmployees().stream()
                 .filter(employee -> employee.getExperienceYears() > 5)
                 .filter(employee -> employee.getPosition().equals("Senior Lawyer"))
                 .forEach(employee -> {
@@ -109,22 +109,22 @@ public class Application {
         court.addCaseToCourt(caseAlice);
         court.printDetails();
 
-        boolean isInCourt = court.getCaseStream()
+        boolean isInCourt = court.getCases().stream()
                 .anyMatch(c -> c.getCaseStatus() == CaseStatus.IN_COURT);
         LOGGER.info("Is there any case in court? " + isInCourt);
 
-        court.getCaseStream()
+        court.getCases().stream()
                 .map(Case::getCaseDescription)
                 .distinct()
                 .forEach(description -> LOGGER.info("Case Description: " + description));
 
-        double averageComplexity = court.getCaseStream()
+        double averageComplexity = court.getCases().stream()
                 .mapToInt(Case::getCaseComplexity)
                 .average()
                 .orElse(0.0);
         LOGGER.info("Average case complexity: " + averageComplexity);
 
-        Optional<Case> lastCase = court.getCaseStream()
+        Optional<Case> lastCase = court.getCases().stream()
                 .max(Comparator.comparingInt(Case::getCaseNumber));
 
         lastCase.ifPresent(caseObject -> {

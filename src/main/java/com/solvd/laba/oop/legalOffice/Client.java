@@ -9,6 +9,7 @@ import org.apache.logging.log4j.core.Logger;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Client extends Person implements Printable, Contactable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Client.class);
@@ -21,6 +22,20 @@ public class Client extends Person implements Printable, Contactable {
         this.request = request;
         this.contactInfo = contactInfo;
         clientCount++;
+    }
+
+    public Set<String> getEmails() {
+        return contactInfo.stream()
+                .map(ContactInfo::getEmail)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+    }
+
+    public Set<String> getPhones() {
+        return contactInfo.stream()
+                .map(ContactInfo::getPhone)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
     }
 
     public String getRequest() {
