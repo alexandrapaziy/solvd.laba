@@ -8,15 +8,18 @@ import com.solvd.laba.oop.legalOffice.list.CustomLinkedList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
 public class Court extends LegalEntity implements Printable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Court.class);
     private CourtType courtType;
-    private CustomLinkedList<Case> cases;
+    private LinkedList<Case> cases;
 
     public Court(String entityName, String address, CourtType courtType) {
         super(entityName, address);
         this.courtType = courtType;
-        this.cases = new CustomLinkedList<>();
+        this.cases = new LinkedList<>();
     }
 
     public CourtType getCourtType() {
@@ -25,6 +28,14 @@ public class Court extends LegalEntity implements Printable {
 
     public void setCourtType(CourtType courtType) {
         this.courtType = courtType;
+    }
+
+    public LinkedList<Case> getCases() {
+        return cases;
+    }
+
+    public void setCases(LinkedList<Case> cases) {
+        this.cases = cases;
     }
 
     public void addCaseToCourt(Case legalCase) {
@@ -50,10 +61,12 @@ public class Court extends LegalEntity implements Printable {
         LOGGER.info("Address: " + getAddress());
         LOGGER.info("----------------------------");
         LOGGER.info("Cases in Court:");
-        for (int i = 0; i < cases.size(); i++) {
-            Case legalCase = cases.get(i);
-            LOGGER.info("Case Number: " + legalCase.getCaseNumber());
-        }
+
+        String caseNumbers = cases.stream()
+                .map(legalCase -> String.valueOf(legalCase.getCaseNumber()))
+                .collect(Collectors.joining(", "));
+
+        LOGGER.info("Cases in Court: " + caseNumbers);
         LOGGER.info("----------------------------");
     }
 }
