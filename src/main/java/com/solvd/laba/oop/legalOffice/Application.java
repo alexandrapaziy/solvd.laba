@@ -31,6 +31,8 @@ public class Application {
         employees.add(lawyerMike);
 
         LegalOffice office = new LegalOffice("LawOffice", "city Kyiv", employees);
+        Thread officeThread = new Thread(office);
+        officeThread.start();
         office.printDetails();
 
         getEmployeeCount();
@@ -100,6 +102,7 @@ public class Application {
         LOGGER.info("Еhe complexity of the case has been doubled because the case is going to court, now complexity is: " + doubledComplexity);
 
         Document document = new Document(null, "Claim for recognition of property ownership in the order of inheritance");
+        document.start();
         document.printDetails();
         document.sign(clientAlice);
         document.setDocumentType(DocumentType.STATEMENT);

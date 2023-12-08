@@ -11,7 +11,7 @@ import org.apache.logging.log4j.core.Logger;
 
 import java.util.Date;
 
-public class Document implements Signable, Printable, Reviewable {
+public class Document extends Thread implements Signable, Printable, Reviewable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(Document.class);
     private DocumentType documentType;
     private String documentContent;
@@ -112,5 +112,10 @@ public class Document implements Signable, Printable, Reviewable {
         LOGGER.info("Creation date: " + creationDate);
         LOGGER.info("Document status: " + documentStatus);
         LOGGER.info("----------------------------");
+    }
+
+    @Override
+    public void run() {
+        LOGGER.info("Thread is running...");
     }
 }
