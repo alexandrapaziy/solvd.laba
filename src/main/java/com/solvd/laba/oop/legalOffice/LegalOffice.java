@@ -6,7 +6,7 @@ import org.apache.logging.log4j.core.Logger;
 
 import java.util.List;
 
-public class LegalOffice extends LegalEntity implements Printable {
+public class LegalOffice extends LegalEntity implements Printable, Runnable {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(LegalOffice.class);
     private List<Employee> employees;
 
@@ -33,5 +33,10 @@ public class LegalOffice extends LegalEntity implements Printable {
             employee.printDetails();
         }
         LOGGER.info("----------------------------");
+    }
+
+    @Override
+    public void run() {
+        LOGGER.info("Thread is running...");
     }
 }
