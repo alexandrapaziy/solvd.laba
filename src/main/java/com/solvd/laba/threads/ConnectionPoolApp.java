@@ -11,7 +11,7 @@ public class ConnectionPoolApp {
     private static final Logger LOGGER = (Logger) LogManager.getLogger(ConnectionPoolApp.class);
 
     public static void main(String[] args) {
-        ConnectionPool connectionPool = new ConnectionPool(5);
+        ConnectionPool connectionPool = ConnectionPool.getInstance(5);
         ExecutorService executorService = Executors.newFixedThreadPool(7);
 
         CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {

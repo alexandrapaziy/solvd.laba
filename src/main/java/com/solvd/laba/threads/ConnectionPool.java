@@ -4,13 +4,23 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPool {
+    private static ConnectionPool instance;
     private final BlockingQueue<Connection> connections; // черга з'єднань
     private final int poolSize; // розмір
     private boolean initialized = false; // чи заповнений пул з'єднаннями
 
-    public ConnectionPool(int poolSize) {
+    private ConnectionPool(int poolSize) {
         this.poolSize = poolSize;
         this.connections = new LinkedBlockingQueue<>(poolSize);
+    }
+
+    public static ConnectionPool getInstance(int poolSize) {
+        if (instance == null) {
+            synchronized (ConnectionPool.class){
+                instance = new ConnectionPool(poolSize);
+            }
+        }
+        return instance;
     }
 
     private void initializeConnections() {
